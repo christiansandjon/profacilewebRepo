@@ -8,8 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 @Entity
 @Table(name = "personnes")
-public class Personne implements
-Serializable {
+public class Personne implements Serializable {
 @Id @GeneratedValue
 private Long num;
 private String nom;
@@ -23,12 +22,7 @@ String prenom) {
 	this.nom = nom;
 	this.prenom = prenom;
 	}
-	public Long getNum() {
-	return num;
-	}
-	public void setNum(Long num) {
-	this.num = num;
-	}
+
 	public String getNom() {
 	return nom;
 	}

@@ -12,7 +12,7 @@ public class Postuler implements Serializable{
 	serialVersionUID = 1L;
 	
 	private Offre offre;
-	private Coach coach;
+	private Professeur professeur;
 	
 	public Offre getOffre() {
 		return this.offre;
@@ -22,11 +22,11 @@ public class Postuler implements Serializable{
 		this.offre = offre;
 	}
 	
-	public Coach getCoach() {
-		return this.coach;
+	public Professeur getProfesseur() {
+		return this.professeur;
 	}
-	public void setCoach(Coach coach) {
-		this.coach = coach;
+	public void setProfesseur(Professeur professeur) {
+		this.professeur = professeur;
 	}
 	
 	public ArrayList<Postuler> lesEleves(String email) {
@@ -79,7 +79,7 @@ public class Postuler implements Serializable{
 	}
 
 	
-	public ArrayList<Postuler> lesCoachs(int idEleve) {
+	public ArrayList<Postuler> lesProfesseurs(int idEleve) {
 		ArrayList<Postuler> a = new ArrayList<Postuler>();
 		try{  
 			Class.forName("com.mysql.jdbc.Driver");  
@@ -96,9 +96,9 @@ public class Postuler implements Serializable{
 				int idcours = resultat.getInt("id_cours");
 				Cours cours = new Cours();
 				cours.setCours(idcours);
-				Coach coach = new Coach();
+				Professeur professeur = new Professeur();
 				String email = resultat.getString("email_enseignant");
-				coach.setCoach(email);
+				professeur.setProfesseur(email);
 				String status = resultat.getString("status");
 				String datepub = resultat.getString("datepub");
 				String niveau = resultat.getString("niveau");
@@ -111,7 +111,7 @@ public class Postuler implements Serializable{
 				
 				
 				Postuler p = new Postuler();
-				p.setCoach(coach);
+				p.setProfesseur(professeur);
 				p.setOffre(o);
 				a.add(p);
 				

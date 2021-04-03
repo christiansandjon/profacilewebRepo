@@ -1,4 +1,6 @@
 package com.profacile.model;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,12 +8,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 @Entity
 @Table(name="offre")
 
@@ -88,7 +84,7 @@ public class Offre implements Serializable{
 		
 	}
 	
-	public String listeOffreCoach() {
+	public String listeOffreProfesseur() {
 		String sql = "SELECT * FROM offre WHERE id_cours IN (SELECT id_cours FROM enseigner WHERE email_enseignant = 'frank@gmail.com')";
 		return  "";
 	}
@@ -226,8 +222,8 @@ public class Offre implements Serializable{
 		
 	}
 	
-	public ArrayList<Coach> coachOffre(int idoffre) {
-		ArrayList<Coach> a = new ArrayList<Coach>();
+	public ArrayList<Professeur> professeurOffre(int idoffre) {
+		ArrayList<Professeur> a = new ArrayList<Professeur>();
 		try{  
 			Class.forName("com.mysql.jdbc.Driver");  
 			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/profacile","root","root");  
@@ -241,8 +237,8 @@ public class Offre implements Serializable{
 				int id = resultat.getInt("id_offre");
 				String email = resultat.getString("email_enseignant");
 				
-				Coach c = new Coach();
-				c.setCoach(email);
+				Professeur c = new Professeur();
+				c.setProfesseur(email);
 				a.add(c);
 		
 			}
@@ -255,7 +251,7 @@ public class Offre implements Serializable{
 	}
 	
 	
-	public ArrayList<Offre> lesCoachs(int idEleve) {
+	public ArrayList<Offre> lesProfesseurs(int idEleve) {
 		ArrayList<Offre> a = new ArrayList<Offre>();
 		try{  
 			Class.forName("com.mysql.jdbc.Driver");  
@@ -271,9 +267,9 @@ public class Offre implements Serializable{
 				int idcours = resultat.getInt("id_cours");
 				Cours cours = new Cours();
 				cours.setCours(idcours);
-				Coach coach = new Coach();
+				Professeur professeur = new Professeur();
 				String email = resultat.getString("email_enseignant");
-				coach.setCoach(email);
+				professeur.setProfesseur(email);
 				String status = resultat.getString("status");
 				String datepub = resultat.getString("datepub");
 				String niveau = resultat.getString("niveau");
@@ -284,7 +280,7 @@ public class Offre implements Serializable{
 				o.setDatepub(datepub);
 				o.setStatus(status);
 				o.setNiveau(niveau);
-				//o.setCoach(coach);
+				//o.setProfesseur(professeur);
 				a.add(o);
 				
 				
@@ -347,7 +343,7 @@ public class Offre implements Serializable{
 		
 	}
 	
-	public ArrayList<Offre> listeOffreCoachPostuler(String email) {
+	public ArrayList<Offre> listeOffreProfesseurPostuler(String email) {
 		ArrayList<Offre> a = new ArrayList<Offre>();
 		try{  
 			Class.forName("com.mysql.jdbc.Driver");  
@@ -399,7 +395,7 @@ public class Offre implements Serializable{
 	
 
 
-	public ArrayList<Offre> listeOffreCoach(String email) {
+	public ArrayList<Offre> listeOffreProfesseur(String email) {
 		ArrayList<Offre> a = new ArrayList<Offre>();
 		try{  
 			Class.forName("com.mysql.jdbc.Driver");  

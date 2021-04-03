@@ -12,7 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 @Entity
-@Table(name="admin")
+@Table(name="Admin")
 
 public class Admin implements Serializable{
 	@Id
@@ -20,13 +20,18 @@ public class Admin implements Serializable{
 	@Column(name="id")
 	private Integer id;
 	
-	@Column(name="username")
-	private String username;
+	@Column(name="login")
+	private String login;
 	
 	@Column(name="password")
 	private String password;
 	private static final long
 	serialVersionUID = 1L;
+
+	public static final String connect = "com.mysql.jdbc.Driver";
+	public static final String udbc = "jdbc:mysql://localhost:3306/profacile";
+	public static final String user = "root";
+	public static final String pass = "root";
 	
 	public Integer getId() {
 		return this.id;
@@ -34,11 +39,11 @@ public class Admin implements Serializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getUsername() {
-		return this.username;
+	public String getLogin() {
+		return this.login;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setLogin(String login) {
+		this.login = login;
 	}
 	public String getPassword() {
 		return this.password;
@@ -47,15 +52,15 @@ public class Admin implements Serializable{
 		this.password = password;
 	}
 	
-	public void save(String username,String password) {
+	public void save(String login,String password) {
 		
 		try{  
-			Class.forName("com.mysql.jdbc.Driver");  
+			Class.forName(connect);
 			Connection con=DriverManager.getConnection(  
-			"jdbc:mysql://localhost:3306/profacile","root","root");  
+			udbc,user,pass);
 			
 			Statement stmt=con.createStatement();  
-			String sql = "INSERT INTO admin(id,username,password) VALUES (NULL,'"+username+"','"+password+"')";
+			String sql = "INSERT INTO admin(id,login,password) VALUES (NULL,'"+login+"','"+password+"')";
 			stmt.executeUpdate(sql);  
 			
 			}catch(Exception e){ System.out.println(e);
@@ -68,17 +73,17 @@ public class Admin implements Serializable{
 		boolean test = false;
 		
 		try{  
-			Class.forName("com.mysql.jdbc.Driver");  
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/profacile","root","root");  
+			Class.forName(connect);
+			Connection con=DriverManager.getConnection(udbc,user,pass);
 			 
 			Statement stmt=con.createStatement();  
 			String sql = "SELECT * FROM admin";
 			ResultSet resultat = stmt.executeQuery(sql);  
 			while(resultat.next()) {
-				String user = resultat.getString("username");
+				String user = resultat.getString("login");
 				String pass = resultat.getString("password");
 				
-				if((user.equals(this.username))&&(pass.equals(this.password))) {
+				if((user.equals(this.login))&&(pass.equals(this.password))) {
 					test = true;
 				}
 				
@@ -91,32 +96,32 @@ public class Admin implements Serializable{
 	}
 	
 	public String getPassword(int id) {
-		String pass="";
+		String password="";
 		try{  
-			Class.forName("com.mysql.jdbc.Driver");  
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/profacile","root","root");  
+			Class.forName(connect);
+			Connection con=DriverManager.getConnection(udbc,user,pass);
 			 
 			Statement stmt=con.createStatement();  
 			String sql = "SELECT * FROM admin WHERE id ="+id+"";
 			System.out.println(sql);
 			ResultSet resultat = stmt.executeQuery(sql);  
 			while(resultat.next()) {
-				String user = resultat.getString("username");
-				 pass = resultat.getString("password");
+				String user = resultat.getString("login");
+				 password = resultat.getString("password");
 			}
 			
 			}catch(Exception e){ System.out.println(e);
 		
 			} 	
 		
-		return pass;
+		return password;
 		
 	}
 	
 	public void update(int id,String password) {
 		try{  
-			Class.forName("com.mysql.jdbc.Driver");  
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/profacile","root","root");  
+			Class.forName(connect);
+			Connection con=DriverManager.getConnection(udbc,user,pass);
 			 
 			Statement stmt=con.createStatement();  
 			String sql = "UPDATE admin SET password = '"+password+"' WHERE id="+id+"";

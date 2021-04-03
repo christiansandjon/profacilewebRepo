@@ -1,5 +1,6 @@
 package com.profacile.config;
 
+
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,7 @@ public class WellAppInitializer implements WebApplicationInitializer {
             // create the spring application context
             AnnotationConfigWebApplicationContext context =
                     new AnnotationConfigWebApplicationContext();
-            context.register(WebConfig.class);
+            context.register(Config.class);
 
             // create the dispatcher servlet
             DispatcherServlet dispatcherServlet =

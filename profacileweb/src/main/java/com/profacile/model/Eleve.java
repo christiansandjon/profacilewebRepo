@@ -12,139 +12,117 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 @Entity
-@Table(name="eleve")
+@Table(name="Eleve")
 public class Eleve implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="id")
+	@Column(name="eleve_id")
 	private Integer id;
-	
-	@Column(name="nom")
-	private String nom;
 	
 	@Column(name="prenom")
 	private String prenom;
 	
-	@Column(name="adresse")
-	private String adresse;
-	
+	@Column(name="nom")
+	private String nom;
+
 	@Column(name="email")
 	private String email;
-	
+
 	@Column(name="telephone")
 	private String telephone;
+
+	@Column(name="password")
+	private String password;
 	
+	@Column(name="fkAdresse")
+	private Adresse adresse;
+
+	@Column(name="niveauScolaire")
+	private NiveauScolaire niveauScolaire;
+
+	/*
 	@Column(name="pays")
 	private String pays;
 	
 	@Column(name="ville")
 	private String ville;
-	
-	@Column(name="motpasse")
-	private String motpasse;
-	
-	@Column(name="classe")
-	private String classe;
-	
-	
+*/
+
+
+	public Integer getId() {
+		return id;
+	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
-	public Integer getId() {
-		
-		return this.id;
-	}
-	public String getNom() {
-		return nom;
-	}
-	
-	public void setNom(String nom) {
-		
-		this.nom = nom;
-	}
-	
+
 	public String getPrenom() {
 		return prenom;
 	}
-	
+
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
-	
-	public String getAdresse() {
-		
-		return adresse;
+
+	public String getNom() {
+		return nom;
 	}
-	public void setAdresse(String adresse) {
-		this.adresse = adresse;
-		
+
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
-	
+
 	public String getEmail() {
-		
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
-		
 	}
-	
+
 	public String getTelephone() {
-		
 		return telephone;
 	}
+
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
-		
 	}
-	
-	public void setPays(String pays) {
-		this.pays = pays;
-		
+
+	public String getPassword() {
+		return password;
 	}
-	
-	public String getPays() {
-		
-		return pays;
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
-	public void setVille(String ville) {
-		this.ville = ville;
-		
+
+	public Adresse getAdresse() {
+		return adresse;
 	}
-	public String getVille() {
-		return ville;
-		
+
+	public void setAdresse(Adresse adresse) {
+		this.adresse = adresse;
 	}
-	
-	public String getMotpasse() {
-		
-		return motpasse;
+
+	public NiveauScolaire getNiveauScolaire() {
+		return niveauScolaire;
 	}
-	public void setMotpasse(String motpasse) {
-		this.motpasse = motpasse;
-		
+
+	public void setNiveauScolaire(NiveauScolaire niveauScolaire) {
+		this.niveauScolaire = niveauScolaire;
 	}
-	
-	public String getClasse() {
-		
-		return classe;
-	}
-	public void setClasse(String classe) {
-		this.classe = classe;
-		
-	}
-	
+
 	public boolean update(String emailtrue) {
 		try{  
 			Class.forName("com.mysql.jdbc.Driver");  
 			Connection con=DriverManager.getConnection(  
-			"jdbc:mysql://localhost:3306/profacile","root","root");  
+			"jdbc:mysql://localhost:8889/profacile","root","root");  
 			
 			Statement stmt=con.createStatement();  
-			String sql = "UPDATE eleve SET nom = '"+this.nom+"', prenom = '"+this.prenom+"', adresse = '"+this.adresse+"', classe = '"+this.classe+"', ville = '"+this.ville+"', telephone = '"+this.telephone+"', pays = '"+this.pays+"' WHERE email = '"+emailtrue+"'";
-			stmt.executeUpdate(sql);  
+			//String sql = "UPDATE eleve SET nom = '"+this.nom+"', prenom = '"+this.prenom+"', adresse = '"+this.adresse+"', niveauScolaire = '"+this.niveauScolaire+"', ville = '"+this.ville+"', telephone = '"+this.telephone+"', pays = '"+this.pays+"' WHERE email = '"+emailtrue+"'";
+			//stmt.executeUpdate(sql);
 			return true;
 			}catch(Exception e){ System.out.println(e);
 			return false;
@@ -157,10 +135,10 @@ public class Eleve implements Serializable{
 		try{  
 			Class.forName("com.mysql.jdbc.Driver");  
 			Connection con=DriverManager.getConnection(  
-			"jdbc:mysql://localhost:3306/profacile","root","root");  
+			"jdbc:mysql://localhost:8889/profacile","root","root");  
 			
 			Statement stmt=con.createStatement();  
-			String sql = "INSERT INTO eleve(id,nom,prenom,email,classe,motpasse) VALUES (NULL,'"+this.nom+"','"+this.prenom+"','"+this.email+"','"+this.classe+"','"+this.motpasse+"')";
+			String sql = "INSERT INTO eleve(id,nom,prenom,email,niveauScolaire,password) VALUES (NULL,'"+this.nom+"','"+this.prenom+"','"+this.email+"','"+this.niveauScolaire+"','"+this.password+"')";
 			stmt.executeUpdate(sql);  
 			return true;
 			}catch(Exception e){ System.out.println(e);
@@ -171,7 +149,7 @@ public class Eleve implements Serializable{
 		
 		try{  
 			Class.forName("com.mysql.jdbc.Driver");  
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/profacile","root","root");  
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:8889/profacile","root","root");  
 			 
 			Statement stmt=con.createStatement();  
 			String sql = "SELECT * FROM eleve WHERE id='"+ideleve+"'";
@@ -179,13 +157,13 @@ public class Eleve implements Serializable{
 			while(resultat.next()) {
 				this.id = resultat.getInt("id");
 				 this.email = resultat.getString("email");
-				 this.motpasse = resultat.getString("motpasse");
+				 this.password = resultat.getString("password");
 				 this.nom = resultat.getString("nom");
 				 this.prenom = resultat.getString("prenom");
-				 this.adresse = resultat.getString("adresse");
-				 this.ville = resultat.getString("ville");
-				 this.pays = resultat.getString("pays");
-				 this.classe = resultat.getString("classe");
+				 //this.adresse = resultat.getString("adresse");
+				 //this.ville = resultat.getString("ville");
+				 //this.pays = resultat.getString("pays");
+				 //this.niveauScolaire = resultat.getString("niveauScolaire");
 				 this.telephone = resultat.getString("telephone");
 
 				
@@ -201,7 +179,7 @@ public class Eleve implements Serializable{
 		
 		try{  
 			Class.forName("com.mysql.jdbc.Driver");  
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/profacile","root","root");  
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:8889/profacile","root","root");  
 			 
 			Statement stmt=con.createStatement();  
 			String sql = "SELECT * FROM eleve WHERE email='"+email+"'";
@@ -209,13 +187,13 @@ public class Eleve implements Serializable{
 			while(resultat.next()) {
 				this.id = resultat.getInt("id");
 				 this.email = resultat.getString("email");
-				 this.motpasse = resultat.getString("motpasse");
+				 this.password = resultat.getString("password");
 				 this.nom = resultat.getString("nom");
 				 this.prenom = resultat.getString("prenom");
-				 this.adresse = resultat.getString("adresse");
-				 this.ville = resultat.getString("ville");
-				 this.pays = resultat.getString("pays");
-				 this.classe = resultat.getString("classe");
+				 //this.adresse = resultat.getString("adresse");
+				 //this.ville = resultat.getString("ville");
+				 //this.pays = resultat.getString("pays");
+				 //this.niveauScolaire = resultat.getString("niveauScolaire");
 				 this.telephone = resultat.getString("telephone");
 
 				
@@ -234,16 +212,16 @@ public class Eleve implements Serializable{
 		
 		try{  
 			Class.forName("com.mysql.jdbc.Driver");  
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/profacile","root","root");  
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:8889/profacile","root","root");  
 			 
 			Statement stmt=con.createStatement();  
 			String sql = "SELECT * FROM eleve";
 			ResultSet resultat = stmt.executeQuery(sql);  
 			while(resultat.next()) {
 				String user = resultat.getString("email");
-				String pass = resultat.getString("motpasse");
+				String pass = resultat.getString("password");
 				
-				if((user.equals(this.email))&&(pass.equals(this.motpasse))) {
+				if((user.equals(this.email))&&(pass.equals(this.password))) {
 					test = true;
 				}
 				
@@ -259,7 +237,7 @@ public class Eleve implements Serializable{
 		String pass="";
 		try{  
 			Class.forName("com.mysql.jdbc.Driver");  
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/profacile","root","root");  
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:8889/profacile","root","root");  
 			 
 			Statement stmt=con.createStatement();  
 			String sql = "SELECT * FROM admin WHERE id ="+id+"";
@@ -281,7 +259,7 @@ public class Eleve implements Serializable{
 	public void update(int id,String password) {
 		try{  
 			Class.forName("com.mysql.jdbc.Driver");  
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/profacile","root","root");  
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:8889/profacile","root","root");  
 			 
 			Statement stmt=con.createStatement();  
 			String sql = "UPDATE admin SET password = '"+password+"' WHERE id="+id+"";

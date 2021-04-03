@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class Cours implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="id")
+	@Column(name="cours_id")
 	private Integer id;
 	
 	@Column(name="intitule")
@@ -25,6 +25,11 @@ public class Cours implements Serializable{
 
 	private static final long
 	serialVersionUID = 1L;
+
+	public static final String connect = "com.mysql.jdbc.Driver";
+	public static final String udbc = "jdbc:mysql://localhost:3306/profacile";
+	public static final String user = "root";
+	public static final String pass = "root";
 	
 	public Integer getId() {
 		return this.id;
@@ -40,13 +45,12 @@ public class Cours implements Serializable{
 	}
 	
 	public void setCours(int id) {
-		
 		try{  
-			Class.forName("com.mysql.jdbc.Driver");  
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/profacile","root","root");  
+			Class.forName(connect);
+			Connection con=DriverManager.getConnection(udbc,user,pass);
 			 
 			Statement stmt=con.createStatement();  
-			String sql = "SELECT * FROM cours WHERE id="+id+"";
+			String sql = "SELECT * FROM Cours WHERE id="+id+"";
 			ResultSet resultat = stmt.executeQuery(sql);  
 			while(resultat.next()) {
 				this.id = resultat.getInt("id");
@@ -67,11 +71,11 @@ public class Cours implements Serializable{
 		int nombre =0;
 		
 		try{  
-			Class.forName("com.mysql.jdbc.Driver");  
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/profacile","root","root");  
+			Class.forName(connect);
+			Connection con=DriverManager.getConnection(udbc,user,pass);
 			 
 			Statement stmt=con.createStatement();  
-			String sql = "SELECT COUNT(*) AS nombre FROM cours";
+			String sql = "SELECT COUNT(*) AS nombre FROM Cours";
 			ResultSet resultat = stmt.executeQuery(sql);  
 			while(resultat.next()) {
 				nombre = resultat.getInt("nombre");
@@ -88,11 +92,11 @@ public class Cours implements Serializable{
 		int[] tab = new int[this.nombreTousCours()];
 		int i =0;
 		try{  
-			Class.forName("com.mysql.jdbc.Driver");  
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/profacile","root","root");  
+			Class.forName(connect);
+			Connection con=DriverManager.getConnection(udbc,user,pass);
 			 
 			Statement stmt=con.createStatement();  
-			String sql = "SELECT * FROM cours ";
+			String sql = "SELECT * FROM Cours ";
 			ResultSet resultat = stmt.executeQuery(sql);  
 			while(resultat.next()) {
 				tab[i] = resultat.getInt("id");
@@ -111,17 +115,15 @@ public class Cours implements Serializable{
 		String intitule="";
 		int i =0;
 		try{  
-			Class.forName("com.mysql.jdbc.Driver");  
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/profacile","root","root");  
+			Class.forName(connect);
+			Connection con=DriverManager.getConnection(udbc,user,pass);
 			 
 			Statement stmt=con.createStatement();  
 			String sql = "SELECT * FROM cours WHERE id="+id_cours+"";
 			ResultSet resultat = stmt.executeQuery(sql);  
 			while(resultat.next()) {
 				intitule = resultat.getString("intitule");
-				
-				
-				
+
 			}
 			
 			}catch(Exception e){ System.out.println(e);
